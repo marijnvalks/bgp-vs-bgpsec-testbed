@@ -1,0 +1,92 @@
+services: 
+  exabgp:
+    container_name: exabgp
+    build:
+      context: ../../../docker_images/exabgp
+      dockerfile: Dockerfile
+    volumes:
+      - ../../../scripts/experiment-1-scalability/sending-prefix:/opt/scripts/
+    networks:
+      bgp:
+        ipv4_address: 10.0.0.8
+
+  quagga_00:
+    container_name: quagga_00
+    image: kathara/quagga
+    privileged: true
+    volumes:
+      - ../../../scripts/experiment-1-scalability/measuring-prefix-arrival:/opt/scripts/
+      - ../../configs/kathara-quagga/quagga_as64600.conf:/etc/bgpd.conf
+      - ../../../scripts/experiment-1-scalability/experiments_results/quagga_00:/opt/experiment_output
+      - ./entrypoint.sh:/entrypoint.sh
+    entrypoint: ["/entrypoint.sh"]
+    networks:
+      bgp:
+        ipv4_address: 10.0.0.100
+
+  quagga_01:
+    container_name: quagga_01
+    image: kathara/quagga
+    privileged: true
+    volumes:
+      - ../../../scripts/experiment-1-scalability/measuring-prefix-arrival:/opt/scripts/
+      - ../../configs/kathara-quagga/quagga_as64601.conf:/etc/bgpd.conf
+      - ../../../scripts/experiment-1-scalability/experiments_results/quagga_01:/opt/experiment_output
+      - ./entrypoint.sh:/entrypoint.sh
+    entrypoint: ["/entrypoint.sh"]
+    networks:
+      bgp:
+        ipv4_address: 10.0.0.101
+
+  quagga_02:
+    container_name: quagga_02
+    image: kathara/quagga
+    privileged: true
+    volumes:
+      - ../../../scripts/experiment-1-scalability/measuring-prefix-arrival:/opt/scripts/
+      - ../../configs/kathara-quagga/quagga_as64602.conf:/etc/bgpd.conf
+      - ../../../scripts/experiment-1-scalability/experiments_results/quagga_02:/opt/experiment_output
+      - ./entrypoint.sh:/entrypoint.sh
+    entrypoint: ["/entrypoint.sh"]
+    networks:
+      bgp:
+        ipv4_address: 10.0.0.102
+
+  quagga_03:
+    container_name: quagga_03
+    image: kathara/quagga
+    privileged: true
+    volumes:
+      - ../../../scripts/experiment-1-scalability/measuring-prefix-arrival:/opt/scripts/
+      - ../../configs/kathara-quagga/quagga_as64603.conf:/etc/bgpd.conf
+      - ../../../scripts/experiment-1-scalability/experiments_results/quagga_03:/opt/experiment_output
+      - ./entrypoint.sh:/entrypoint.sh
+    entrypoint: ["/entrypoint.sh"]
+    networks:
+      bgp:
+        ipv4_address: 10.0.0.103
+
+  quagga_04:
+    container_name: quagga_04
+    image: kathara/quagga
+    privileged: true
+    volumes:
+      - ../../../scripts/experiment-1-scalability/measuring-prefix-arrival:/opt/scripts/
+      - ../../configs/kathara-quagga/quagga_as64604.conf:/etc/bgpd.conf
+      - ../../../scripts/experiment-1-scalability/experiments_results/quagga_04:/opt/experiment_output
+      - ./entrypoint.sh:/entrypoint.sh
+    entrypoint: ["/entrypoint.sh"]
+    networks:
+      bgp:
+        ipv4_address: 10.0.0.104
+
+
+  
+networks:
+  bgp:
+    driver_opts:
+      com.docker.network.bridge.name: br-bgp 
+    ipam:
+      driver: default
+      config: 
+        - subnet: 10.0.0.0/8
