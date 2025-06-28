@@ -72,7 +72,7 @@ The QuaggaSRx setup is based on earlier work of SIDN: https://github.com/SIDN/bg
 | `bgpsec-testbed/topologies/scripts/sign_csr.sh`                                     | Script to sign router Certificate Signing Requests (CSRs) using OpenSSL.                                                               |
 
 ## Running Topologies and Experiments
-
+![Experiment Flow](testbed-flow.png)
 > ⚠️ Make sure all Bash scripts are executable (`chmod +x script.sh`) before running them.
 
 ---
